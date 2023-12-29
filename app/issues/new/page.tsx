@@ -27,6 +27,20 @@ const NewIssuePage = () => {
     resolver: zodResolver(createIssueSchema),
   });
 
+  const onSubmit = handleSubmit(async (data) => {
+    //Seperation of concerns improvement here. However there is no reuse of logic in the app.
+      try {
+        setIsSubmitting(true);
+        await axios.post("/api/issues", data);
+        setIsSubmitting(false);
+        router.push("/issues");
+      } catch (error) {
+        setIsSubmitting(false);
+        setError("An unexpected error occured.");
+      }
+    })
+  
+
   return (
     <div className="max-w-xl">
       {error && (
@@ -36,17 +50,7 @@ const NewIssuePage = () => {
       )}
       <form
         className="space-y-5"
-        onSubmit={handleSubmit(async (data) => {
-          try {
-            setIsSubmitting(true);
-            await axios.post("/api/issues", data);
-            router.push("/issues");
-            setIsSubmitting(false);
-          } catch (error) {
-            setIsSubmitting(false);
-            setError("An unexpected error occured.");
-          }
-        })}
+        onSubmit={onSubmit}
       >
         <TextField.Root>
           <TextField.Input placeholder="Title" {...register("title")} />
