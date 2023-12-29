@@ -6,9 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "clean": "rm -rf ./node_modules package-lock.json .cache dist && npm i"
   },
   "dependencies": {
+    "@hookform/resolvers": "3.3.1",
     "@prisma/client": "^5.3.1",
     "@radix-ui/themes": "^2.0.3",
     "@types/node": "20.10.5",
